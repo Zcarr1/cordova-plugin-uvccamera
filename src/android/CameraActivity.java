@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Surface;
-import android.view.SurfaceTexture;
+import android.graphics.SurfaceTexture;
 import android.widget.Toast;
 
-import com.serenegiant.uvccamera.UVCCameraHandler;
-import com.serenegiant.uvccamera.UVCCameraTextureView;
+import com.serenegiant.usbcameracommon.UVCCameraHandler;
+import com.serenegiant.widget.UVCCameraTextureView;
 import com.serenegiant.usb.USBMonitor;
 import com.serenegiant.usb.USBMonitor.UsbControlBlock;
 
