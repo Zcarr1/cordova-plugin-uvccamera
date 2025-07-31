@@ -1,0 +1,11 @@
+allprojects {
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+
+dependencies {
+  implementation (name:'libuvccamera', ext:'aar')
+}

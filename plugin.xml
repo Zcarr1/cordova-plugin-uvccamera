@@ -13,13 +13,15 @@
       <activity android:name="cordova.plugins.uvccamera.CameraActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
     </config-file>
 
-    <source-file src="src/android/UVCCameraPlugin.java" target-dir="src/cordova/plugins/uvccamera"/>
-    <source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugins/uvccamera"/>
+    <source-file src="src/android/UVCCameraPlugin.java" target-dir="src/cordova/plugin/uvccamera"/>
+    <source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/uvccamera"/>
 
     <!-- Dipendenze native -->
-    <framework src="src/android/libs/libuvccamera-1.0.0.aar" custom="true" type="aar" />
-  </platform>
+    <!--framework src="src/android/libs/libuvccamera-1.0.0.aar" custom="true" type="aar" /-->
 
+    <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
+		<resource-file src="src/android/libs/libuvccamera.aar" target="libs/libuvccamera.aar" />
+  </platform>
   <js-module src="www/UVCCamera.js" name="UVCCamera">
     <clobbers target="window.UVCCamera" />
   </js-module>
