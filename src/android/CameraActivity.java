@@ -25,18 +25,18 @@ import com.serenegiant.usb.*;
 public class CameraActivity extends Activity {
 
   private USBMonitor mUSBMonitor;
-  private UVCCameraView mCameraView;
+  private UVCCameraTextureView mCameraTextureView;
   public static UVCCameraHandler mCameraHandler;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    mCameraView = new UVCCameraTextureView(this);
-    setContentView(mCameraView);
+    mCameraTextureView = new UVCCameraTextureView(this);
+    setContentView(mCameraTextureView);
 
     mUSBMonitor = new USBMonitor(this, onDeviceConnectListener);
-    mCameraHandler = UVCCameraHandler.createHandler(this, mCameraView,
+    mCameraHandler = UVCCameraHandler.createHandler(this, mCameraTextureView,
         UVCCamera.DEFAULT_PREVIEW_WIDTH, UVCCamera.DEFAULT_PREVIEW_HEIGHT);
 
     mUSBMonitor.register();
