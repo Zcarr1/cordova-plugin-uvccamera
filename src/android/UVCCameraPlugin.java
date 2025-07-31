@@ -4,6 +4,8 @@ import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import cordova.plugin.uvccamera.CameraActivity;
+
 import android.content.Intent;
 
 public class UVCCameraPlugin extends CordovaPlugin {
