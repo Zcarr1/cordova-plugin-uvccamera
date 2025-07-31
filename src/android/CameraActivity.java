@@ -74,7 +74,7 @@ public class CameraActivity extends Activity {
       mCameraHandler.captureStill(new UVCCameraHandler.OnCaptureListener() {
         @Override
         public void onCapture(Bitmap bitmap) {
-          if (resultType === "base64") {
+          if (resultType == "base64") {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
             byte[] imageBytes = outputStream.toByteArray();
