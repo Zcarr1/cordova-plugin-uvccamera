@@ -18,8 +18,12 @@ import java.util.Base64;
 
 import android.hardware.usb.UsbDevice;
 
+import com.serenegiant.usb.USBMonitor;
+import com.serenegiant.usb.USBMonitor.OnDeviceConnectListener;
+import com.serenegiant.usb.UVCCamera;
+import com.serenegiant.usbcameracommon.UVCCameraHandler;
+import com.serenegiant.widget.UVCCameraTextureView;
 import com.serenegiant.uvccamera.*;
-import com.serenegiant.usb.*;
 
 
 public class CameraActivity extends Activity {
