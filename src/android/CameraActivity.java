@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 
-import com.serenegiant.usb.USBMonitor;
+import com.serenegiant.usb.*;
 import com.serenegiant.uvccamera.*;
 
 public class CameraActivity extends Activity {
