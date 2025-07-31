@@ -10,11 +10,11 @@
     </config-file>
 
     <config-file target="AndroidManifest.xml" parent="application">
-      <activity android:name="cordova.plugin.uvccamera.CameraActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+      <activity android:name="cordova.plugins.uvccamera.CameraActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
     </config-file>
 
-    <source-file src="src/android/UVCCameraPlugin.java" target-dir="src/cordova/plugin/uvccamera"/>
-    <source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/uvccamera"/>
+    <source-file src="src/android/UVCCameraPlugin.java" target-dir="src/cordova/plugins/uvccamera"/>
+    <source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugins/uvccamera"/>
 
     <!-- Dipendenze native -->
     <framework src="src/android/libs/libuvccamera-1.0.0.aar" custom="true" type="aar" />

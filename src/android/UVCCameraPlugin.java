@@ -1,4 +1,4 @@
-package cordova.plugin.uvccamera;
+package cordova.plugins.uvccamera;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;

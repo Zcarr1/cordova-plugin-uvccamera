@@ -1,4 +1,4 @@
-package cordova.plugin.uvccamera;
+package cordova.plugins.uvccamera;
 
 import android.app.Activity;
 import android.os.Bundle;
