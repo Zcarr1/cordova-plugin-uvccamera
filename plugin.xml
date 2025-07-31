@@ -1,0 +1,26 @@
+<plugin id="cordova-plugin-uvccamera" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+  <name>UVCCamera</name>
+  <description>Plugin Cordova per webcam USB usando libuvccamera</description>
+  <license>MIT</license>
+  <keywords>cordova,plugin,usb,uvc,camera</keywords>
+  <platform name="android">
+    <config-file target="AndroidManifest.xml" parent="/*">
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="application">
+      <activity android:name="cordova.plugin.uvccamera.CameraActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+    </config-file>
+
+    <source-file src="src/android/UVCCameraPlugin.java" target-dir="src/cordova/plugin/uvccamera"/>
+    <source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/uvccamera"/>
+
+    <!-- Dipendenze native -->
+    <framework src="src/android/libs/libuvccamera-1.0.0.aar" custom="true" type="aar" />
+  </platform>
+
+  <js-module src="www/UVCCamera.js" name="UVCCamera">
+    <clobbers target="window.UVCCamera" />
+  </js-module>
+</plugin>
