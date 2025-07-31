@@ -1,6 +1,5 @@
 package cordova.plugins.uvccamera;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -11,13 +10,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 
-import com.serenegiant.usb.*;
-import com.serenegiant.uvccamera.*;
+import android.hardware.usb.UsbDevice;
 
-public class CameraActivity extends Activity {
+import com.serenegiant.common.BaseActivity;
+import com.serenegiant.usb.USBMonitor;
+import com.serenegiant.usb.USBMonitor.OnDeviceConnectListener;
+import com.serenegiant.usb.USBMonitor.UsbControlBlock;
+import com.serenegiant.usb.UVCCamera;
+import com.serenegiant.widget.UVCCameraTextureView;
+import com.serenegiant.usbcameracommon.UVCCameraHandler;
+
+
+public class CameraActivity extends BaseActivity {
 
   private USBMonitor mUSBMonitor;
-  private UVCCameraView mCameraView;
+  private UVCCameraTextureView mCameraView;
   public static UVCCameraHandler mCameraHandler;
 
   @Override
