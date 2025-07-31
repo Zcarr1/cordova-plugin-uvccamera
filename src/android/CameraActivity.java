@@ -14,6 +14,7 @@ import com.serenegiant.usbcameracommon.UVCCameraHandler;
 import com.serenegiant.widget.UVCCameraTextureView;
 import com.serenegiant.usb.USBMonitor;
 import com.serenegiant.usb.USBMonitor.UsbControlBlock;
+import com.serenegiant.usb.UVCCamera;
 
 import java.io.ByteArrayOutputStream;
 
@@ -32,9 +33,9 @@ public class CameraActivity extends Activity {
 
     mCameraHandler = UVCCameraHandler.createHandler(
         this, mCameraView,
-        UVCCameraHandler.DEFAULT_PREVIEW_WIDTH,
-        UVCCameraHandler.DEFAULT_PREVIEW_HEIGHT,
-        UVCCameraHandler.DEFAULT_PREVIEW_MODE);
+        UVCCamera.DEFAULT_PREVIEW_WIDTH,
+        UVCCamera.DEFAULT_PREVIEW_HEIGHT,
+        UVCCamera.DEFAULT_PREVIEW_MODE);
 
     mUSBMonitor = new USBMonitor(this, mOnDeviceConnectListener);
     mUSBMonitor.register();
