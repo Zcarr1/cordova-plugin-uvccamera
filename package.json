@@ -1,0 +1,22 @@
+{
+  "name": "cordova-plugin-uvccamera",
+  "version": "1.0.0",
+  "description": "Plugin Cordova per accedere a webcam USB UVC su Android usando libuvccamera",
+  "cordova": {
+    "id": "cordova-plugin-uvccamera",
+    "platforms": ["android"]
+  },
+  "keywords": [
+    "cordova",
+    "plugin",
+    "camera",
+    "usb",
+    "uvc",
+    "android"
+  ],
+  "author": "Tuo Nome",
+  "license": "MIT",
+  "engines": {
+    "cordova": ">=10.0.0"
+  }
+}
