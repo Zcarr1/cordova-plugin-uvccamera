@@ -21,8 +21,8 @@ import android.hardware.usb.UsbDevice;
 import com.serenegiant.usb.USBMonitor;
 import com.serenegiant.usb.USBMonitor.OnDeviceConnectListener;
 import com.serenegiant.usb.UVCCamera;
-import com.serenegiant.usbcameracommon.UVCCameraHandler;
-import com.serenegiant.widget.UVCCameraTextureView;
+import com.serenegiant.usbcameracommon.*;
+import com.serenegiant.widget.*;
 import com.serenegiant.uvccamera.*;
 
 
