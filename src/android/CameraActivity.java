@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import android.graphics.Bitmap;
+import android.graphics.SurfaceTexture;
+import android.view.Surface;
 import android.os.Environment;
 
 import java.io.ByteArrayOutputStream;
@@ -24,7 +26,6 @@ import com.serenegiant.usb.UVCCamera;
 import com.serenegiant.usbcameracommon.*;
 import com.serenegiant.widget.*;
 import com.serenegiant.uvccamera.*;
-
 
 public class CameraActivity extends Activity {
 
@@ -53,9 +54,13 @@ public class CameraActivity extends Activity {
     }
 
     @Override
-    public void onConnect(UsbDevice device, USBMonitor.UsbControlBlock ctrlBlock, boolean createNew) {
+    public void onConnect(UsbDevice device, UsbControlBlock ctrlBlock, boolean createNew) {
       mCameraHandler.open(ctrlBlock);
-      mCameraHandler.startPreview();
+
+      SurfaceTexture st = mCameraView.getSurfaceTexture();
+      Surface surface = new Surface(st);
+
+      mCameraHandler.startPreview(surface);
     }
 
     @Override
