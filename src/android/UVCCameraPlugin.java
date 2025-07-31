@@ -16,8 +16,9 @@ public class UVCCameraPlugin extends CordovaPlugin {
             callbackContext.success("Camera opened");
             return true;
         } else if (action.equals("takePicture")) {
+            String resultType = args.optString(0, "");
             cordova.getActivity().runOnUiThread(() -> {
-                CameraActivity.requestSnapshot(callbackContext);
+                CameraActivity.requestSnapshot(resultType, callbackContext);
             });
             return true;
         }

@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 
 import com.serenegiant.usb.USBMonitor;
 import com.serenegiant.uvccamera.*;
@@ -67,28 +69,36 @@ public class CameraActivity extends Activity {
       mUSBMonitor.unregister();
   }
 
-  public static void requestSnapshot(CallbackContext callbackContext) {
+  public static void requestSnapshot(String resultType, CallbackContext callbackContext) {
     if (mCameraHandler != null && mCameraHandler.isOpened()) {
-      File photoDir = new File(Environment.getExternalStorageDirectory(), "UVCCamera");
-      if (!photoDir.exists()) {
-        photoDir.mkdirs();
-      }
-
-      String filename = "photo_" + System.currentTimeMillis() + ".jpg";
-      File photoFile = new File(photoDir, filename);
-
       mCameraHandler.captureStill(new UVCCameraHandler.OnCaptureListener() {
         @Override
         public void onCapture(Bitmap bitmap) {
-          try {
-            FileOutputStream out = new FileOutputStream(photoFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            out.flush();
-            out.close();
+          if (resultType === "base64") {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+            byte[] imageBytes = outputStream.toByteArray();
+            String base64Image = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
 
-            callbackContext.success(photoFile.getAbsolutePath());
-          } catch (IOException e) {
-            callbackContext.error("Errore salvataggio immagine: " + e.getMessage());
+            callbackContext.success(base64Image);
+          } else {
+            File photoDir = new File(Environment.getExternalStorageDirectory(), "UVCCamera");
+            if (!photoDir.exists()) {
+              photoDir.mkdirs();
+            }
+
+            String filename = "photo_" + System.currentTimeMillis() + ".jpg";
+            File photoFile = new File(photoDir, filename);
+
+            try {
+              FileOutputStream out = new FileOutputStream(photoFile);
+              bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+              out.flush();
+              out.close();
+              callbackContext.success(photoFile.getAbsolutePath());
+            } catch (IOException e) {
+              callbackContext.error("Errore salvataggio immagine: " + e.getMessage());
+            }
           }
         }
       });
@@ -96,4 +106,5 @@ public class CameraActivity extends Activity {
       callbackContext.error("Camera non disponibile");
     }
   }
+
 }
