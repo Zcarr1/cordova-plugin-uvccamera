@@ -19,7 +19,7 @@
     <!-- Dipendenze native -->
     <!--framework src="src/android/libs/libuvccamera-1.0.0.aar" custom="true" type="aar" /-->
 
-    <framework src="src/android/UVCCamera.gradle" custom="true" type="gradleReference" />
+    <framework src="src/android/UVCCameraPlugin.gradle" custom="true" type="gradleReference" />
 		<resource-file src="src/android/libs/libuvccamera.aar" target="libs/libuvccamera.aar" />
   </platform>
   <js-module src="www/UVCCamera.js" name="UVCCamera">

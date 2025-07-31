@@ -6,7 +6,7 @@ import org.json.JSONException;
 
 import android.content.Intent;
 
-public class UVCCamera extends CordovaPlugin {
+public class UVCCameraPlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
