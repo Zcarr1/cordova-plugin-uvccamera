@@ -13,7 +13,7 @@
       <activity android:name="cordova.plugins.uvccamera.CameraActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
     </config-file>
 
-    <source-file src="src/android/UVCCamera.java" target-dir="src/cordova/plugin/uvccamera"/>
+    <source-file src="src/android/UVCCameraPlugin.java" target-dir="src/cordova/plugin/uvccamera"/>
     <source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/uvccamera"/>
 
     <!-- Dipendenze native -->
