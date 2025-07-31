@@ -1,127 +1,132 @@
-package cordova.plugins.uvccamera;
-
-import org.apache.cordova.*;
+package cordova.plugin.uvccamera;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-
 import android.graphics.Bitmap;
-import android.graphics.SurfaceTexture;
+import android.hardware.usb.UsbDevice;
+import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Surface;
-import android.os.Environment;
+import android.view.SurfaceTexture;
+import android.widget.Toast;
+
+import com.serenegiant.uvccamera.UVCCameraHandler;
+import com.serenegiant.uvccamera.UVCCameraTextureView;
+import com.serenegiant.usb.USBMonitor;
+import com.serenegiant.usb.USBMonitor.UsbControlBlock;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Base64;
-
-import android.hardware.usb.UsbDevice;
-
-import com.serenegiant.usb.USBMonitor;
-import com.serenegiant.usb.USBMonitor.OnDeviceConnectListener;
-import com.serenegiant.usb.UVCCamera;
-import com.serenegiant.usbcameracommon.*;
-import com.serenegiant.widget.*;
-import com.serenegiant.uvccamera.*;
 
 public class CameraActivity extends Activity {
 
+  private UVCCameraTextureView mCameraView;
+  private UVCCameraHandler mCameraHandler;
   private USBMonitor mUSBMonitor;
-  private UVCCameraTextureView mCameraTextureView;
-  public static UVCCameraHandler mCameraHandler;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    mCameraTextureView = new UVCCameraTextureView(this);
-    setContentView(mCameraTextureView);
+    mCameraView = new UVCCameraTextureView(this);
+    setContentView(mCameraView);
 
-    mUSBMonitor = new USBMonitor(this, onDeviceConnectListener);
-    mCameraHandler = UVCCameraHandler.createHandler(this, mCameraTextureView,
-        UVCCamera.DEFAULT_PREVIEW_WIDTH, UVCCamera.DEFAULT_PREVIEW_HEIGHT);
+    mCameraHandler = UVCCameraHandler.createHandler(
+        this, mCameraView,
+        UVCCameraHandler.DEFAULT_PREVIEW_WIDTH,
+        UVCCameraHandler.DEFAULT_PREVIEW_HEIGHT,
+        UVCCameraHandler.DEFAULT_PREVIEW_MODE);
 
+    mUSBMonitor = new USBMonitor(this, mOnDeviceConnectListener);
     mUSBMonitor.register();
   }
 
-  private final USBMonitor.OnDeviceConnectListener onDeviceConnectListener = new USBMonitor.OnDeviceConnectListener() {
+  private final USBMonitor.OnDeviceConnectListener mOnDeviceConnectListener = new USBMonitor.OnDeviceConnectListener() {
     @Override
     public void onAttach(UsbDevice device) {
+      Toast.makeText(CameraActivity.this, "USB device attached", Toast.LENGTH_SHORT).show();
       mUSBMonitor.requestPermission(device);
     }
 
     @Override
     public void onConnect(UsbDevice device, UsbControlBlock ctrlBlock, boolean createNew) {
+      Toast.makeText(CameraActivity.this, "USB device connected", Toast.LENGTH_SHORT).show();
       mCameraHandler.open(ctrlBlock);
-
-      SurfaceTexture st = mCameraTextureView.getSurfaceTexture();
-      Surface surface = new Surface(st);
-
-      mCameraHandler.startPreview(surface);
+      final SurfaceTexture st = mCameraView.getSurfaceTexture();
+      if (st != null) {
+        mCameraHandler.startPreview(new Surface(st));
+      }
     }
 
     @Override
-    public void onDisconnect(UsbDevice device, USBMonitor.UsbControlBlock ctrlBlock) {
+    public void onDisconnect(UsbDevice device, UsbControlBlock ctrlBlock) {
+      Toast.makeText(CameraActivity.this, "USB device disconnected", Toast.LENGTH_SHORT).show();
       mCameraHandler.close();
     }
 
     @Override
     public void onDettach(UsbDevice device) {
+      Toast.makeText(CameraActivity.this, "USB device detached", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onCancel(UsbDevice device) {
+      Toast.makeText(CameraActivity.this, "USB permission cancelled", Toast.LENGTH_SHORT).show();
     }
   };
 
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    if (mCameraHandler != null)
-      mCameraHandler.release();
-    if (mUSBMonitor != null)
-      mUSBMonitor.unregister();
+  // ✅ Metodo per catturare un'immagine dalla preview
+  private Bitmap captureImage() {
+    if (mCameraView != null) {
+      return mCameraView.getBitmap();
+    }
+    return null;
   }
 
-  public static void requestSnapshot(String resultType, CallbackContext callbackContext) {
-    if (mCameraHandler != null && mCameraHandler.isOpened()) {
-      mCameraHandler.captureStill(new UVCCameraHandler.OnCaptureListener() {
-        @Override
-        public void onCapture(Bitmap bitmap) {
-          if (resultType == "base64") {
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
-            byte[] imageBytes = outputStream.toByteArray();
-            String base64Image = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
+  // ✅ Metodo per convertire il Bitmap in base64
+  private String bitmapToBase64(Bitmap bitmap) {
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+    byte[] byteArray = outputStream.toByteArray();
+    return Base64.encodeToString(byteArray, Base64.NO_WRAP);
+  }
 
-            callbackContext.success(base64Image);
-          } else {
-            File photoDir = new File(Environment.getExternalStorageDirectory(), "UVCCamera");
-            if (!photoDir.exists()) {
-              photoDir.mkdirs();
-            }
-
-            String filename = "photo_" + System.currentTimeMillis() + ".jpg";
-            File photoFile = new File(photoDir, filename);
-
-            try {
-              FileOutputStream out = new FileOutputStream(photoFile);
-              bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-              out.flush();
-              out.close();
-              callbackContext.success(photoFile.getAbsolutePath());
-            } catch (IOException e) {
-              callbackContext.error("Errore salvataggio immagine: " + e.getMessage());
-            }
-          }
-        }
-      });
+  // ✅ Metodo per scattare una foto e loggare il risultato
+  public void takeSnapshot() {
+    Bitmap bmp = captureImage();
+    if (bmp != null) {
+      String base64 = bitmapToBase64(bmp);
+      Log.d("UVCCamera", "Snapshot base64: " + base64);
     } else {
-      callbackContext.error("Camera non disponibile");
+      Log.w("UVCCamera", "Snapshot failed: no bitmap available");
     }
   }
 
+  @Override
+  protected void onStart() {
+    super.onStart();
+    if (mUSBMonitor != null) {
+      mUSBMonitor.register();
+    }
+  }
+
+  @Override
+  protected void onStop() {
+    if (mUSBMonitor != null) {
+      mUSBMonitor.unregister();
+    }
+    super.onStop();
+  }
+
+  @Override
+  protected void onDestroy() {
+    if (mCameraHandler != null) {
+      mCameraHandler.release();
+      mCameraHandler = null;
+    }
+    if (mUSBMonitor != null) {
+      mUSBMonitor.destroy();
+      mUSBMonitor = null;
+    }
+    super.onDestroy();
+  }
 }
