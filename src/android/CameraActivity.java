@@ -57,7 +57,7 @@ public class CameraActivity extends Activity {
     public void onConnect(UsbDevice device, UsbControlBlock ctrlBlock, boolean createNew) {
       mCameraHandler.open(ctrlBlock);
 
-      SurfaceTexture st = mCameraView.getSurfaceTexture();
+      SurfaceTexture st = mCameraTextureView.getSurfaceTexture();
       Surface surface = new Surface(st);
 
       mCameraHandler.startPreview(surface);
