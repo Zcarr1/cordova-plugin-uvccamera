@@ -1,5 +1,0 @@
-include ':libuvccamera'
-project(':libuvccamera').projectDir = new File(rootProject.projectDir, 'libs/libuvccamera')
-
-include ':usbCameraCommon'
-project(':usbCameraCommon').projectDir = new File(rootProject.projectDir, 'libs/usbCameraCommon')
