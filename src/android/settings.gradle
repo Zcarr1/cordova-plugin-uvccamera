@@ -1,5 +1,5 @@
 include ':libuvccamera'
-project(':libuvccamera').projectDir = new File(rootProject.projectDir, 'app/libs/libuvccamera')
+project(':libuvccamera').projectDir = new File(rootProject.projectDir, 'libs/libuvccamera')
 
 include ':usbCameraCommon'
-project(':usbCameraCommon').projectDir = new File(rootProject.projectDir, 'app/libs/usbCameraCommon')
+project(':usbCameraCommon').projectDir = new File(rootProject.projectDir, 'libs/usbCameraCommon')
