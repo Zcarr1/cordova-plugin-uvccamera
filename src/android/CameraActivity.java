@@ -94,12 +94,16 @@ public class CameraActivity extends Activity {
   // ✅ Metodo per scattare una foto e loggare il risultato
   public static String takeSnapshot() {
     Bitmap bmp = captureImage();
+    
     if (bmp != null) {
       String base64 = bitmapToBase64(bmp);
       Log.d("UVCCamera", "Snapshot base64: " + base64);
+      finish();
       return base64;
     } else {
       Log.w("UVCCamera", "Snapshot failed: no bitmap available");
+      finish();
+      return null;
     }
   }
 
