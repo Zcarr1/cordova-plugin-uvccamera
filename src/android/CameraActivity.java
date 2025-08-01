@@ -24,9 +24,12 @@ public class CameraActivity extends Activity {
   private UVCCameraHandler mCameraHandler;
   private USBMonitor mUSBMonitor;
 
+  public static CameraActivity instance;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    instance = this;
 
     mCameraView = new UVCCameraTextureView(this);
     setContentView(mCameraView);
@@ -94,16 +97,22 @@ public class CameraActivity extends Activity {
   // ✅ Metodo per scattare una foto e loggare il risultato
   public static String takeSnapshot() {
     Bitmap bmp = captureImage();
-    
+
     if (bmp != null) {
       String base64 = bitmapToBase64(bmp);
       Log.d("UVCCamera", "Snapshot base64: " + base64);
-      finish();
+      
+      if (instance != null) {
+        instance.runOnUiThread(() -> instance.finish());
+      }
+
       return base64;
     } else {
       Log.w("UVCCamera", "Snapshot failed: no bitmap available");
-      finish();
-      return null;
+    }
+
+    if (instance != null) {
+      instance.runOnUiThread(() -> instance.finish());
     }
   }
 
@@ -133,6 +142,8 @@ public class CameraActivity extends Activity {
       mUSBMonitor.destroy();
       mUSBMonitor = null;
     }
+
+    instance = null;
     super.onDestroy();
   }
 }
