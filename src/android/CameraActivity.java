@@ -11,7 +11,7 @@ import android.graphics.SurfaceTexture;
 import android.widget.Toast;
 
 import com.serenegiant.usbcameracommon.UVCCameraHandler;
-import com.serenegiant.widget.UVCCameraTextureView;
+import com.serenegiant.widget.*;
 import com.serenegiant.usb.USBMonitor;
 import com.serenegiant.usb.USBMonitor.UsbControlBlock;
 import com.serenegiant.usb.UVCCamera;
