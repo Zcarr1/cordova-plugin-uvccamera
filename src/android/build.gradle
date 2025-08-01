@@ -5,6 +5,8 @@ repositories {
 }
 
 dependencies {
-  implementation (name:'libuvccamera', ext:'aar')
-  implementation (name:'usbCameraCommon', ext:'aar')
+  //implementation (name:'libuvccamera', ext:'aar')
+  //implementation (name:'usbCameraCommon', ext:'aar')
+  implementation 'ai.eye2you:libuvccamera:2018.10.2'
+  implementation 'ai.eye2you:usbCameraCommon:2018.10.2'
 }

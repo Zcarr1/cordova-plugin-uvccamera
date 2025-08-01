@@ -16,8 +16,8 @@
     <source-file src="src/android/UVCCameraPlugin.java" target-dir="src/cordova/plugin/uvccamera"/>
     <source-file src="src/android/CameraActivity.java" target-dir="src/cordova/plugin/uvccamera"/>
 
-		<resource-file src="src/android/libs/libuvccamera.aar" target="libs/libuvccamera.aar" />
-    <resource-file src="src/android/libs/usbCameraCommon.aar" target="libs/usbCameraCommon.aar" />
+		<!--resource-file src="src/android/libs/libuvccamera.aar" target="libs/libuvccamera.aar" /-->
+    <!--resource-file src="src/android/libs/usbCameraCommon.aar" target="libs/usbCameraCommon.aar" /-->
 
     <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
   </platform>
