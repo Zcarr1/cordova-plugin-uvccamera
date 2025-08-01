@@ -1,6 +1,8 @@
-repositories {
-  flatDir {
-    dirs 'src/main/libs'
+allprojects {
+  repositories {
+    flatDir {
+      dirs 'src/main/libs'
+    }
   }
 }
 
