@@ -20,7 +20,7 @@ import java.io.ByteArrayOutputStream;
 
 public class CameraActivity extends Activity {
 
-  private UVCCameraTextureView mCameraView;
+  private static UVCCameraTextureView mCameraView;
   private UVCCameraHandler mCameraHandler;
   private USBMonitor mUSBMonitor;
 
@@ -76,7 +76,7 @@ public class CameraActivity extends Activity {
   };
 
   // ✅ Metodo per catturare un'immagine dalla preview
-  private Bitmap captureImage() {
+  private static Bitmap captureImage() {
     if (mCameraView != null) {
       return mCameraView.getBitmap();
     }
@@ -84,7 +84,7 @@ public class CameraActivity extends Activity {
   }
 
   // ✅ Metodo per convertire il Bitmap in base64
-  private String bitmapToBase64(Bitmap bitmap) {
+  private static String bitmapToBase64(Bitmap bitmap) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
     byte[] byteArray = outputStream.toByteArray();
