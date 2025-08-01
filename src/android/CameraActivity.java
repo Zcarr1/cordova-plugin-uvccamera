@@ -20,7 +20,7 @@ import java.io.ByteArrayOutputStream;
 
 public class CameraActivity extends Activity {
 
-  private static UVCCameraTextureView mCameraView;
+  public static UVCCameraTextureView mCameraView;
   private UVCCameraHandler mCameraHandler;
   private USBMonitor mUSBMonitor;
 
@@ -38,6 +38,7 @@ public class CameraActivity extends Activity {
         this, mCameraView,
         UVCCamera.DEFAULT_PREVIEW_WIDTH,
         UVCCamera.DEFAULT_PREVIEW_HEIGHT,
+        UVCCamera.FRAME_FORMAT_MJPEG,
         UVCCamera.DEFAULT_PREVIEW_MODE);
 
     mUSBMonitor = new USBMonitor(this, mOnDeviceConnectListener);
