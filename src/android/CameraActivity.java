@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.serenegiant.usbcameracommon.UVCCameraHandler;
 import com.serenegiant.widget.UVCCameraTextureView;
+import com.serenegiant.widget.IAspectRatioView;
 import com.serenegiant.usb.USBMonitor;
 import com.serenegiant.usb.USBMonitor.UsbControlBlock;
 import com.serenegiant.usb.UVCCamera;
@@ -78,7 +79,7 @@ public class CameraActivity extends Activity {
     }
   };
 
-  // ✅ Metodo per catturare un'immagine dalla preview
+  // Metodo per catturare un'immagine dalla preview
   private static Bitmap captureImage() {
     if (mCameraView != null) {
       return mCameraView.getBitmap();
@@ -86,7 +87,7 @@ public class CameraActivity extends Activity {
     return null;
   }
 
-  // ✅ Metodo per convertire il Bitmap in base64
+  // Metodo per convertire il Bitmap in base64
   private static String bitmapToBase64(Bitmap bitmap) {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
@@ -94,7 +95,7 @@ public class CameraActivity extends Activity {
     return Base64.encodeToString(byteArray, Base64.NO_WRAP);
   }
 
-  // ✅ Metodo per scattare una foto e loggare il risultato
+  // Metodo per scattare una foto e loggare il risultato
   public static String takeSnapshot() {
     Bitmap bmp = captureImage();
 
